@@ -1,0 +1,688 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AgriField-40K &amp; AgriMAE</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+<style>
+  :root{
+    --paper: #ffffff;
+    --panel: #f4f5f1;
+    --ink: #1a1a16;
+    --ink-dim: #57584e;
+    --canopy: #5c7a2e;
+    --canopy-deep: #3c5419;
+    --wheat: #96702a;
+    --rule: rgba(26,26,22,0.10);
+    --maxw: 980px;
+  }
+  *{box-sizing:border-box;}
+  html{scroll-behavior:smooth;}
+  body{
+    margin:0;
+    background:var(--paper);
+    color:var(--ink);
+    font-family:'Inter',sans-serif;
+    font-size:16px;
+    line-height:1.7;
+  }
+  h1,h2,h3{
+    font-family:'Inter',sans-serif;
+    font-weight:600;
+    margin:0 0 0.3em;
+    letter-spacing:-0.01em;
+    line-height:1.15;
+  }
+  .mono{font-family:'IBM Plex Mono',monospace;}
+  a{color:var(--canopy-deep);}
+  .wrap{max-width:var(--maxw); margin:0 auto; padding:0 28px;}
+
+  body, .wrap, p, .authors, .institutes, .tagline, figcaption, .abstract-box, .contrib-list, .stat-row{
+    text-align:center;
+  }
+
+  .topbar{
+    position:sticky; top:0; z-index:50;
+    background:rgba(255,255,255,0.92);
+    backdrop-filter:blur(8px);
+    border-bottom:1px solid var(--rule);
+  }
+  .topbar .wrap{
+    display:flex; align-items:center; justify-content:space-between;
+    padding-top:14px; padding-bottom:14px;
+    text-align:left;
+  }
+  .brand{font-family:'IBM Plex Mono',monospace; font-size:13px; letter-spacing:0.06em; color:var(--wheat); text-transform:uppercase;}
+  .topnav a{
+    color:var(--ink-dim); text-decoration:none; font-size:13px;
+    margin-left:22px; font-family:'IBM Plex Mono',monospace;
+    letter-spacing:0.02em;
+    border-bottom:1px solid transparent;
+    padding-bottom:2px;
+  }
+  .topnav a:hover{color:var(--canopy-deep); border-bottom-color:var(--canopy-deep);}
+
+  .hero{
+    padding:88px 0 56px;
+    position:relative;
+    overflow:hidden;
+  }
+  .eyebrow{
+    font-family:'IBM Plex Mono',monospace;
+    font-size:12.5px;
+    letter-spacing:0.14em;
+    text-transform:uppercase;
+    color:var(--canopy-deep);
+    margin-bottom:18px;
+  }
+  .hero h1{
+    font-size:clamp(2.1rem, 4.4vw, 3.4rem);
+    line-height:1.15;
+    color:var(--ink);
+    max-width:850px;
+    margin-left:auto; margin-right:auto;
+  }
+  .hero h1 em{
+    font-style:normal;
+    color:var(--canopy-deep);
+  }
+  .hero .tagline{
+    max-width:640px;
+    font-size:1.08rem;
+    color:var(--ink-dim);
+    margin:14px auto 0;
+  }
+  .authors{
+    margin-top:30px;
+    font-size:15px;
+    color:var(--ink);
+  }
+  .authors a{
+    color:var(--ink);
+    text-decoration:none;
+    border-bottom:1px solid var(--rule);
+    padding-bottom:1px;
+    transition:color .15s ease, border-color .15s ease;
+  }
+  .authors a:hover{
+    color:var(--canopy-deep);
+    border-bottom-color:var(--canopy-deep);
+  }
+  .authors .sup{ color:var(--wheat); font-size:11px; vertical-align:super; margin-left:1px;}
+  .institutes{
+    margin-top:8px;
+    font-size:13.5px;
+    color:var(--ink-dim);
+  }
+  .corr-note{
+    margin-top:6px;
+    font-size:12px;
+    color:var(--ink-dim);
+    font-style:italic;
+  }
+  .venue-tag{
+    display:inline-block;
+    margin-top:20px;
+    font-family:'IBM Plex Mono',monospace;
+    font-size:12px;
+    letter-spacing:0.08em;
+    color:var(--paper);
+    background:var(--canopy-deep);
+    padding:5px 12px;
+    border-radius:2px;
+    text-transform:uppercase;
+  }
+  .contrib-list{
+    list-style:none; margin:0; padding:0;
+    display:grid; gap:16px;
+  }
+  .contrib-list li{
+    display:grid; grid-template-columns:34px 1fr; gap:14px;
+    padding:18px 0;
+    border-bottom:1px solid var(--rule);
+  }
+  .contrib-list li:last-child{ border-bottom:none; }
+  .contrib-list .idx{
+    font-family:'IBM Plex Mono',monospace;
+    color:var(--wheat); font-size:13px; padding-top:2px;
+  }
+  .contrib-list strong{ color:var(--cream); }
+  .contrib-list span{ color:var(--cream-dim); font-size:14.5px; }
+  .cta-row{
+    margin-top:34px;
+    display:flex; flex-wrap:wrap; gap:12px;
+    justify-content:center;
+  }
+  .btn{
+    display:inline-flex; align-items:center; gap:8px;
+    font-family:'IBM Plex Mono',monospace;
+    font-size:13.5px;
+    text-decoration:none;
+    padding:11px 18px;
+    border-radius:3px;
+    border:1px solid var(--rule);
+    color:var(--ink);
+    background:var(--panel);
+    transition:all .15s ease;
+  }
+  .btn:hover{ border-color:var(--canopy-deep); color:var(--canopy-deep); transform:translateY(-1px);}
+  .btn.primary{
+    background:var(--canopy-deep);
+    border-color:var(--canopy-deep);
+    color:var(--paper);
+    font-weight:500;
+  }
+  .btn.primary:hover{
+    background:var(--canopy);
+    border-color:var(--canopy);
+    color:var(--paper);
+  }
+
+  .mask-strip{
+    margin-top:56px;
+    display:grid;
+    grid-template-columns:repeat(16, 1fr);
+    gap:3px;
+    aspect-ratio:16/4.2;
+    border-radius:4px;
+    overflow:hidden;
+    border:1px solid var(--rule);
+  }
+  @keyframes reveal{ to{opacity:1;} }
+  .mask-caption{
+    font-family:'IBM Plex Mono',monospace;
+    font-size:11.5px;
+    color:var(--ink-dim);
+    margin-top:10px;
+    letter-spacing:0.02em;
+  }
+
+  section{ padding:64px 0; border-top:1px solid var(--rule);}
+  .section-head{
+    display:flex; align-items:baseline; gap:14px;
+    margin-bottom:28px;
+    justify-content:center;
+  }
+  .section-num{
+    font-family:'IBM Plex Mono',monospace;
+    color:var(--wheat); font-size:13px;
+  }
+  section h2{ font-size:1.6rem; color:var(--ink);}
+
+  .lede{
+    max-width:760px;
+    margin:0 auto;
+    color:var(--ink-dim);
+  }
+
+   .pipeline{
+    display:flex; align-items:stretch; justify-content:center;
+    gap:14px; flex-wrap:wrap;
+    max-width:820px;
+    margin:34px auto 0;
+  }
+  .pipe-step{
+    flex:1 1 200px;
+    background:var(--panel);
+    border-radius:3px;
+    padding:20px 18px;
+    text-align:center;
+  }
+  .pipe-num{
+    font-family:'IBM Plex Mono',monospace;
+    font-size:12px;
+    color:var(--wheat);
+    letter-spacing:0.06em;
+    margin-bottom:8px;
+  }
+  .pipe-title{
+    font-family:'Inter',sans-serif;
+    font-weight:600;
+    font-size:1.05rem;
+    color:var(--ink);
+    margin-bottom:6px;
+  }
+  .pipe-text{
+    font-size:13px;
+    color:var(--ink-dim);
+    line-height:1.55;
+  }
+  .pipe-arrow{
+    display:flex; align-items:center; justify-content:center;
+    color:var(--canopy-deep);
+    font-size:1.3rem;
+    flex:0 0 auto;
+  }
+  @media (max-width:700px){
+    .pipeline{ flex-direction:column; }
+    .pipe-arrow{ transform:rotate(90deg); }
+  }
+
+  .abstract-box{
+    background:var(--panel);
+    border:1px solid var(--rule);
+    border-top:3px solid var(--canopy-deep);
+    padding:26px 32px;
+    border-radius:2px;
+    font-size:1rem;
+    color:var(--ink-dim);
+    max-width:820px;
+    margin:0 auto;
+  }
+  .abstract-box p{ margin:0;}
+
+  figure{ margin:0 auto; max-width:820px; }
+  figure img{
+    width:100%; display:block; border-radius:3px;
+    /* border:1px solid var(--rule); */
+    background:var(--panel);
+  }
+  figcaption{
+    margin-top:12px;
+    font-size:13.5px;
+    color:var(--ink-dim);
+    max-width:700px;
+    margin-left:auto; margin-right:auto;
+  }
+
+  .stat-row{
+    display:grid;
+    grid-template-columns:repeat(auto-fit, minmax(150px,1fr));
+    gap:1px;
+    background:var(--rule);
+    border:1px solid var(--rule);
+    border-radius:3px;
+    overflow:hidden;
+    margin:34px auto 0;
+    max-width:820px;
+  }
+  .stat{
+    background:var(--paper);
+    padding:22px 18px;
+  }
+  .stat .num{
+    font-family:'Inter',sans-serif;
+    font-weight:600;
+    font-size:1.9rem;
+    color:var(--canopy-deep);
+  }
+  .stat .label{
+    margin-top:6px;
+    font-family:'IBM Plex Mono',monospace;
+    font-size:11.5px;
+    color:var(--ink-dim);
+    letter-spacing:0.02em;
+  }
+
+  .contrib-list{
+    list-style:none; margin:0 auto; padding:0;
+    display:grid; gap:16px;
+    max-width:760px;
+  }
+  .contrib-list li{
+    display:grid; grid-template-columns:34px 1fr; gap:14px;
+    padding:18px 0;
+    border-bottom:1px solid var(--rule);
+    text-align:left;
+  }
+  .contrib-list li:last-child{ border-bottom:none; }
+  .contrib-list .idx{
+    font-family:'IBM Plex Mono',monospace;
+    color:var(--wheat); font-size:13px; padding-top:2px;
+  }
+  .contrib-list strong{ color:var(--ink); }
+  .contrib-list span{ color:var(--ink-dim); font-size:14.5px; }
+
+  .qual-grid{
+    display:grid; grid-template-columns:repeat(4,1fr); gap:10px;
+    margin-top:22px;
+    max-width:900px;
+    margin-left:auto; margin-right:auto;
+  }
+  .qual-grid img{ width:100%; border-radius:3px; }
+  .qual-grid .cap{
+    grid-column:1/-1;
+    font-size:12.5px; color:var(--ink-dim); margin-top:-4px; font-family:'IBM Plex Mono',monospace;
+  }
+  @media (max-width:640px){ .qual-grid{ grid-template-columns:repeat(2,1fr);} }
+
+  .table-wrap{
+    max-width:900px;
+    margin:28px auto 0;
+    overflow-x:auto;
+    border:1px solid var(--rule);
+    border-radius:3px;
+  }
+  table.data-table{
+    width:100%;
+    border-collapse:collapse;
+    font-size:13.5px;
+    background:var(--paper);
+  }
+  table.data-table th, table.data-table td{
+    padding:11px 16px;
+    border-bottom:1px solid var(--rule);
+    text-align:left;
+    white-space:nowrap;
+  }
+  table.data-table th{
+    font-family:'IBM Plex Mono',monospace;
+    font-size:11.5px;
+    letter-spacing:0.03em;
+    text-transform:uppercase;
+    color:var(--ink-dim);
+    background:var(--panel);
+  }
+  table.data-table tr:last-child td{ border-bottom:none; }
+  table.data-table tr.total td{
+    font-weight:600; color:var(--canopy-deep);
+    background:var(--panel);
+  }
+  .table-note{
+    font-size:12.5px; color:var(--ink-dim);
+    max-width:700px; margin:12px auto 0;
+    font-style:italic;
+  }
+
+  .bibtex{
+    background:var(--panel);
+    border:1px solid var(--rule);
+    border-radius:3px;
+    padding:20px 22px;
+    font-family:'IBM Plex Mono',monospace;
+    font-size:12.5px;
+    color:var(--ink-dim);
+    overflow-x:auto;
+    white-space:pre;
+    line-height:1.55;
+    position:relative;
+    max-width:820px;
+    margin:20px auto 0;
+    text-align:left;
+  }
+  .copy-btn{
+    position:absolute; top:14px; right:14px;
+    font-family:'IBM Plex Mono',monospace;
+    font-size:11px; color:var(--ink-dim);
+    background:var(--paper); border:1px solid var(--rule);
+    padding:6px 10px; border-radius:3px; cursor:pointer;
+  }
+  .copy-btn:hover{ color:var(--canopy-deep); border-color:var(--canopy-deep); }
+
+  footer{
+    padding:40px 0 60px;
+    border-top:1px solid var(--rule);
+    font-size:13px; color:var(--ink-dim);
+    font-family:'IBM Plex Mono',monospace;
+    text-align:center;
+  }
+
+  ::selection{ background:var(--canopy-deep); color:var(--paper); }
+</style>
+</head>
+<body>
+
+<div class="topbar">
+  <div class="wrap">
+    <div class="brand">AgriField-40K</div>
+    <nav class="topnav">
+      <a href="#abstract">Abstract</a>
+      <a href="#teaser">Overview</a>
+      <a href="#contrib">Contributions</a>
+      <a href="#dataset">Dataset</a>
+      <a href="#method">Method</a>
+      <a href="#results">Results</a>
+      <a href="#bibtex">Cite</a>
+    </nav>
+  </div>
+</div>
+
+<header class="hero">
+  <div class="wrap">
+    <h1>AgriField-40K: Adapting Vision Models to Agriculture <em>With Efficient Continual Pretraining</em></h1>
+
+    <div class="authors">
+      <a href="https://scholar.google.com/citations?user=upyzrnkAAAAJ&hl=da&oi=ao" target="_blank" rel="noopener">Vasileios Tzouras</a><span class="sup">1,2,*</span> &nbsp;·&nbsp;
+      <a href="https://scholar.google.com/citations?user=LVACmX4AAAAJ" target="_blank" rel="noopener">Paraskevas Pegios</a><span class="sup">1,2</span> &nbsp;·&nbsp;
+      <a href="https://scholar.google.com/citations?user=YAx9230AAAAJ&hl=en" target="_blank" rel="noopener">Lazaros Nalpantidis</a><span class="sup">1,2</span>
+    </div>
+    <div class="institutes">
+      <sup>1</sup> Technical University of Denmark (DTU) &nbsp;&nbsp;
+      <sup>2</sup> Pioneer Centre for Artificial Intelligence
+    </div>
+    <div class="corr-note">* Corresponding author</div>
+
+    <span class="venue-tag">European Conference on Computer Vision (ECCV) Workshops 2026</span>
+
+    <div class="cta-row">
+      <a class="btn" href="url" target="_blank">
+        <i class="fa-solid fa-file-pdf"></i> Paper
+      </a>
+
+      <a class="btn" href="https://huggingface.co/datasets/dtu-pcas/AgriField-40K" target="_blank">
+        <i class="fa-solid fa-database"></i> Dataset
+      </a>
+
+      <a class="btn" href="url" target="_blank">
+        <i class="fa-brands fa-xing"></i> arXiv
+      </a>
+
+      <a class="btn" href="https://github.com/DTU-PAS/agrifield40k" target="_blank">
+        <i class="fa-brands fa-github"></i> Code
+      </a>
+
+      <a class="btn" href="#bibtex">
+        <i class="fa-solid fa-quote-right"></i> BibTeX
+      </a>
+    </div>
+  </div>
+</header>
+
+<section id="abstract">
+  <div class="wrap">
+    <div class="section-head"><span class="section-num"></span><h2>Abstract</h2></div>
+    <div class="abstract-box">
+      <p style="text-align: justify;">Field-based agricultural computer vision is important for precision agriculture, yet it largely depends on expensive annotations and costly adaptation of large pretrained models. We introduce <strong style="color:var(--ink)">AgriField-40K</strong>, a field-centric dataset curated from 17 public resources and covering diverse crops, weeds, and field conditions. Building on this, we present <strong style="color:var(--ink)">AgriMAE</strong>, a parameter-efficient continual pretraining baseline that adapts a masked autoencoder pretrained on natural images by training only lightweight adapters. We further explore semantic feature reconstruction as an alternative pretraining objective and evaluate transfer across multiple tasks. AgriMAE consistently improves downstream performance and can match or even outperform full fine-tuning while using up to 9&times; fewer trainable parameters, showing that AgriField-40K is a practical resource for continual pretraining in agricultural vision.</p>
+    </div>
+
+    <div class="stat-row">
+      <div class="stat"><div class="num">~40K</div><div class="label">field images</div></div>
+      <div class="stat"><div class="num">17</div><div class="label">public source datasets</div></div>
+      <div class="stat"><div class="num">9×</div><div class="label">fewer trainable params vs. full FT</div></div>
+      <div class="stat"><div class="num">4</div><div class="label">downstream tasks evaluated</div></div>
+    </div>
+  </div>
+</section>
+
+<section id="teaser">
+  <div class="wrap">
+    <div class="section-head"><span class="section-num"></span><h2>Overview</h2></div>
+    <p class="lede" style="text-align: justify;">Vision models pretrained on natural images transfer poorly to agricultural fields, where repeated plant structures, occlusion, and shifting illumination, growth stage, and acquisition platform create a real domain gap. Fully adapting a large backbone to close this gap is expensive and risks overfitting on limited field data. We tackle this with two contributions: <strong style="color:var(--ink)">AgriField-40K</strong>, a unified field-centric pretraining corpus, and <strong style="color:var(--ink)">AgriMAE</strong>, which closes the gap by training only lightweight adapters and keeping the pretrained backbone frozen throughout continual pretraining and downstream adaptation alike.</p>
+
+    <div class="pipeline">
+      <div class="pipe-step">
+        <div class="pipe-num">1</div>
+        <div class="pipe-title">Pretrain</div>
+        <div class="pipe-text">Start from an MAE pretrained on natural images (ImageNet).</div>
+      </div>
+      <div class="pipe-arrow">&rarr;</div>
+      <div class="pipe-step">
+        <div class="pipe-num">2</div>
+        <div class="pipe-title">Continually pretrain</div>
+        <div class="pipe-text">Train only adapters on AgriField-40K, pixel or feature reconstruction, backbone frozen.</div>
+      </div>
+      <div class="pipe-arrow">&rarr;</div>
+      <div class="pipe-step">
+        <div class="pipe-num">3</div>
+        <div class="pipe-title">Adapt downstream</div>
+        <div class="pipe-text">Fine-tune adapters + task heads for classification, segmentation, detection.</div>
+      </div>
+    </div>
+</section>
+
+<section id="contrib">
+  <div class="wrap">
+    <div class="section-head"><span class="section-num"></span><h2>Contributions</h2></div>
+      <ul class="contrib-list">
+        <li>
+          <span class="idx">01</span>
+          <div><strong>AgriField-40K.</strong> <span>The first field-centric agricultural dataset for representation learning and continual pretraining, built from 17 public datasets spanning diverse crops, weeds, and field conditions.</span></div>
+        </li>
+        <li>
+          <span class="idx">02</span>
+          <div><strong>AgriMAE.</strong> <span>A simple, parameter-efficient baseline that adapts a standard MAE to field imagery by freezing the pretrained backbone and training only lightweight adapters.</span></div>
+        </li>
+        <li>
+          <span class="idx">03</span>
+          <div><strong>Reconstruction objectives.</strong> <span>A study comparing pixel-level reconstruction with semantic feature reconstruction (via a frozen DINOv3 teacher) for agricultural continual pretraining.</span></div>
+        </li>
+        <li>
+          <span class="idx">04</span>
+          <div><strong>Downstream validation.</strong> <span>Continual pretraining with AgriMAE consistently improves classification, segmentation, and detection performance in parameter-efficient settings.</span></div>
+        </li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<section id="dataset">
+  <div class="wrap">
+    <div class="section-head"><span class="section-num"></span><h2>AgriField-40K Dataset</h2></div>
+    <p class="lede" style="text-align: justify;">To support the systematic study of efficient continual pretraining, we introduce AgriField-40K, a field-centric agricultural dataset for representation learning, built from 17 public resources into a unified corpus of ~40,000 curated RGB images. Unlike leaf-level or species-ID datasets, it focuses on real field conditions (i.e., crop/weed mixtures, dense canopies, soil backgrounds, and multiple growth stages) captured with handheld cameras, robots, drones, and shrouded platforms.</p>
+
+    <figure style="margin-top:34px;">
+      <img src="figures/dataset.png" alt="Grid of sample images from AgriField-40K showing diverse crops, weeds, and field conditions">
+      <figcaption>Sample images from AgriField-40K showing diverse crops, weeds, and field conditions.</figcaption>
+    </figure>
+
+    <p class="lede" style="margin-top:34px; text-align: justify;">We discard the original annotations and keep only RGB images, apply fixed-interval sampling to remove near-duplicate frames from video/robot sources, and manually filter low-quality images. Each image is resized and center-cropped to 512&times;512 using Lanczos interpolation. The dataset is split 80/20 for training and validation, and is released under <strong style="color:var(--ink)">CC BY-SA 4.0</strong>.</p>
+
+    <div class="table-wrap">
+      <table class="data-table">
+        <thead>
+          <tr>
+            <th>Dataset</th><th>Year</th><th>License</th><th>Retained</th><th>Domain</th><th>Task</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr><td>MuST-C</td><td>2026</td><td>CC BY 4.0</td><td>7,242</td><td>Sugar Beet, Soybean, Potato, Maize, Wheat</td><td>&ndash;</td></tr>
+          <tr><td>PhenoBench</td><td>2026</td><td>CC BY-SA 4.0</td><td>9,606</td><td>Sugar Beet &amp; 6 Weeds</td><td>Segmentation</td></tr>
+          <tr><td>LUCASVision</td><td>2023</td><td>CC BY 4.0</td><td>11,195</td><td>12 Crops</td><td>Classification</td></tr>
+          <tr><td>VegAnn</td><td>2022</td><td>CC BY 1.0</td><td>1,607</td><td>26+ Crops</td><td>Segmentation</td></tr>
+          <tr><td>WE3DS</td><td>2023</td><td>CC BY 4.0</td><td>1,553</td><td>7 Crops &amp; 10 Weeds</td><td>Segmentation</td></tr>
+          <tr><td colspan="6" style="text-align:center; color:var(--ink-dim); font-style:italic;">&hellip; 12 more sources</td></tr>
+          <tr class="total"><td>AgriField-40K</td><td>2026</td><td>CC BY-SA 4.0</td><td>39,963</td><td>Field-Centric</td><td>Pretraining</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <p class="table-note">Full breakdown of all 17 sources, licenses, and original vs. retained sizes is in the paper (Table 1).</p>
+  </div>
+</section>
+
+<section id="method">
+  <div class="wrap">
+    <div class="section-head"><span class="section-num"></span><h2>Method</h2></div>
+    <p class="lede" style="text-align: justify;">Large-scale pretraining gives vision models strong general-purpose features, but these models are typically pretrained on natural images like ImageNet. Agricultural field imagery looks quite different, with repeated plant structures, fine-grained crop/weed distinctions, occlusion, and large swings in illumination, growth stage, and acquisition platform, creating a domain gap that limits transfer to real field tasks. The natural fix is continual pretraining on in-domain data, but fully updating a large model can be costly, making parameter-efficient adaptation especially valuable when labelled data and compute are limited.</p>
+
+    <figure style="margin-top:34px;">
+      <img src="figures/model.png" alt="AgriMAE architecture with semantic feature reconstruction">
+      <figcaption>Overview of AgriMAE with semantic feature reconstruction. An ImageNet-pretrained MAE encoder&ndash;decoder is adapted with lightweight adapter modules on AgriField-40K to predict patch-level features from a frozen feature extractor, with the loss computed over both masked and visible patches.</figcaption>
+    </figure>
+
+    <p class="lede" style="margin-top:34px; text-align: justify;">To keep the study controlled, we build on masked image modelling and establish a strong parameter-efficient baseline for continual pretraining. Our approach, AgriMAE, starts with an ImageNet pretrained MAE and continually pretrains it on AgriField-40K to adapt it to the agricultural field domain, while keeping the original encoder and decoder frozen. Only small adapters inserted into each transformer block are trained, both during this continual pretraining stage and the later downstream supervised fine tuning stage. This keeps adaptation cheap: a single consumer GPU is enough, and the majority of the model's parameters remain frozen.</p>
+
+    <p class="lede" style="margin-top:22px; text-align: justify;">Standard masked image modelling reconstructs pixels, which is simple and effective but provides limited semantic supervision. As an alternative, we reconstruct dense features from a strong, frozen feature extractor computed across the whole image rather than just the masked patches. This pushes the adapters to recover semantic structure rather than low-level pixel detail, which matters for field imagery where crop, weed, and background are often spread across the whole scene.</p>
+
+    <figure style="margin-top:34px;">
+      <img src="figures/tsne.png" alt="t-SNE visualization of feature representations from MAE and AgriMAE models with different pretraining objectives">
+      <figcaption>t-SNE visualization of feature representations from different pretraining methods, extracted from the final layer using images from the LUCASVision subset of the AgriField-40K validation split.</figcaption>
+    </figure>
+  </div>
+</section>
+
+<section id="results">
+  <div class="wrap">
+    <div class="section-head"><span class="section-num"></span><h2>Results</h2></div>
+    <p class="lede" style="text-align: justify;">We provide downstream validation showing that our continual pretraining strategy consistently improves performance in parameter-efficient settings across classification, segmentation, and detection. AgriMAE can match or even outperform full fine-tuning while using substantially fewer trainable parameters. We hope AgriField-40K will support future research on efficient continual pretraining and practical agricultural vision applications.</p>
+
+    <div class="qual-grid-group">
+    <h3 class="qual-title" style="margin-top: 34px;">GrowliFlower Segmentation</h3>
+
+    <div class="qual-grid">
+      <img src="figures/segmentation/segmentation_gt.png" alt="segmentation ground truth">
+      <img src="figures/segmentation/segmentation_agrimae_feat.png" alt="AgriMAE feature segmentation">
+      <img src="figures/segmentation/segmentation_agrimae_pix.png" alt="AgriMAE pixel segmentation">
+      <img src="figures/segmentation/segmentation_mae.png" alt="MAE segmentation">
+
+      <div class="cap">
+        Left to right: ground truth · AgriMAE (feature) · AgriMAE (pixel) · MAE
+      </div>
+    </div>
+  </div>
+
+  <div class="qual-grid-group">
+    <h3 class="qual-title" style="margin-top: 34px;">CropAndWeed Detection</h3>
+
+    <div class="qual-grid">
+      <img src="figures/detection/detection_gt.png" alt="detection ground truth">
+      <img src="figures/detection/detection_agrimae_feat.png" alt="AgriMAE feature detection">
+      <img src="figures/detection/detection_agrimae_pix.png" alt="AgriMAE pixel detection">
+      <img src="figures/detection/detection_mae.png" alt="MAE detection">
+
+      <div class="cap">
+        Left to right: ground truth · AgriMAE (feature) · AgriMAE (pixel) · MAE
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="bibtex">
+  <div class="wrap">
+    <div class="section-head"><span class="section-num"></span><h2>BibTeX</h2></div>
+    <p class="lede" style="text-align: justify;">If you find this work useful, please cite:</p>
+
+    <div class="bibtex" id="bibtexBlock">@inproceedings{tzouras2026agrifield,
+      title     = {AgriField-40K: Adapting Vision Models to Agriculture With Efficient Continual Pretraining},
+      author    = {Tzouras, Vasileios and Pegios, Paraskevas and Nalpantidis, Lazaros},
+      booktitle = {Proceedings of the European Conference on Computer Vision (ECCV) Workshops},
+      year      = {2026}
+      }
+    </div>
+      <button class="copy-btn" onclick="copyBib()">Copy</button>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap">
+    Project page for AgriField-40K · ECCV Workshops 2026
+  </div>
+</footer>
+
+<script>
+  const strip = document.getElementById('maskStrip');
+  const cols = 16, rows = 4;
+  for(let r=0;r<rows;r++){
+    for(let c=0;c<cols;c++){
+      const cell = document.createElement('div');
+      cell.className = 'cell';
+      cell.style.backgroundPosition = (c*(100/(cols-1)))+'% '+(r*(100/(rows-1)))+'%';
+      cell.style.animationDelay = (Math.random()*1.4)+'s';
+      strip.appendChild(cell);
+    }
+  }
+
+  function copyBib(){
+    const text = document.getElementById('bibtexBlock').innerText;
+    navigator.clipboard.writeText(text).then(()=>{
+      const btn = document.querySelector('.copy-btn');
+      const old = btn.innerText;
+      btn.innerText = 'Copied';
+      setTimeout(()=>btn.innerText = old, 1400);
+    });
+  }
+</script>
+
+</body>
+</html>
