@@ -2,7 +2,7 @@
 
 <p align="center">
   <a href="https://dtu-pas.github.io/agrifield40k/"><img src="https://img.shields.io/badge/🌐-Project%20Page-green" alt="Project Page"></a>
-  <a href="#"><img src="https://img.shields.io/badge/📄-Paper-b31b1b" alt="Paper"></a>
+  <a href="https://arxiv.org/pdf/2608.07984"><img src="https://img.shields.io/badge/📄-Paper-b31b1b" alt="Paper"></a>
   <a href="https://huggingface.co/datasets/dtu-pcas/AgriField-40K"><img src="https://img.shields.io/badge/🤗-Dataset-yellow" alt="Dataset"></a>
 </p>
 
