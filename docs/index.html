@@ -1,3 +1,5 @@
+
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -649,8 +651,8 @@
       journal = {arXiv preprint arXiv:2608.07984},
       year    = {2026}
     }
-    </div>
       <button class="copy-btn" onclick="copyBib()">Copy</button>
+    </div>
   </div>
 </section>
 
@@ -661,17 +663,6 @@
 </footer>
 
 <script>
-  const strip = document.getElementById('maskStrip');
-  const cols = 16, rows = 4;
-  for(let r=0;r<rows;r++){
-    for(let c=0;c<cols;c++){
-      const cell = document.createElement('div');
-      cell.className = 'cell';
-      cell.style.backgroundPosition = (c*(100/(cols-1)))+'% '+(r*(100/(rows-1)))+'%';
-      cell.style.animationDelay = (Math.random()*1.4)+'s';
-      strip.appendChild(cell);
-    }
-  }
 
   function copyBib(){
     const text = document.getElementById('bibtexBlock').innerText;
