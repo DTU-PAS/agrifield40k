@@ -645,20 +645,25 @@
     <div class="section-head"><span class="section-num"></span><h2>BibTeX</h2></div>
     <p class="lede" style="text-align: justify;">If you find this work useful, please cite:</p>
 
-    <div class="bibtex" id="bibtexBlock"><code id="bibtexText">@article{tzouras2026agrifield,
+    <div style="position:relative;">
+      <pre class="bibtex" id="bibtexBlock">@article{tzouras2026agrifield,
       title   = {AgriField-40K: Adapting Vision Models to Agriculture With Efficient Continual Pretraining},
       author  = {Tzouras, Vasileios and Pegios, Paraskevas and Nalpantidis, Lazaros},
       journal = {arXiv preprint arXiv:2608.07984},
       year    = {2026}
-    }</code>
-      <button class="copy-btn" onclick="copyBib()">Copy</button>
+      }</pre>
+      <button class="copy-btn" onclick="
+        navigator.clipboard.writeText(document.getElementById('bibtexBlock').innerText);
+        this.textContent='Copied!';
+        setTimeout(()=>this.textContent='Copy',2000);
+      ">Copy</button>
     </div>
   </div>
 </section>
 
 <footer>
   <div class="wrap">
-    Project page for AgriField-40K · ECCV Workshops 2026
+    Supported by Innovation Fund Denmark (Grant No. 2105-00013A, SAVA) and the Novo Nordisk Foundation (Grant No. NNF25SA0104538, RIC)
   </div>
 </footer>
 
