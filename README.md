@@ -32,10 +32,10 @@ parameter-efficient continual pretraining baseline for adapting natural-image MA
 If you find this work useful, please cite:
 
 ```bibtex
-@inproceedings{tzouras2026agrifield,
-  title     = {AgriField-40K: Adapting Vision Models to Agriculture With Efficient Continual Pretraining},
-  author    = {Tzouras, Vasileios and Pegios, Paraskevas and Nalpantidis, Lazaros},
-  booktitle = {Proceedings of the European Conference on Computer Vision (ECCV) Workshops},
-  year      = {2026}
+@article{tzouras2026agrifield,
+  title   = {AgriField-40K: Adapting Vision Models to Agriculture With Efficient Continual Pretraining},
+  author  = {Tzouras, Vasileios and Pegios, Paraskevas and Nalpantidis, Lazaros},
+  journal = {arXiv preprint arXiv:2608.07984},
+  year    = {2026}
 }
 ```
